@@ -20,8 +20,21 @@ const Detail = () => {
   }, [id]);
 
   return (
-    <div>
-      <p>Soy un Detalle</p>
+    <div> 
+      {/* {estos son ejemplos de condicional render} */}
+      {/* {
+        character && <div>
+          <h2>{character.name}</h2>  
+        </div>
+      } */}
+      {/* {character ? <h2>{character.name}</h2>:null} */}
+      {/* <h2>{character?.name}</h2> {esto es un condicional chaining} */}
+      <h2>{character?.name}</h2>
+      <h2>{character?.status}</h2>
+      <h2>{character?.species}</h2>
+      <h2>{character?.gender}</h2>
+      <h2>{character?.origin?.name}</h2>
+      <img src={character?.image} alt="" />
     </div>
   );
 };
