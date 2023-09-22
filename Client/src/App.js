@@ -1,5 +1,5 @@
 import "./App.css";
-import Cards from "./components/Cards.jsx";
+import Cards from "./components/Cards";
 import Nav from "./components/Nav";
 import About from "./components/About";
 import Detail from "./components/Detail";
@@ -10,32 +10,35 @@ import Form from "./components/Form";
 import { useLocation, useNavigate } from "react-router-dom";
 import Favorite from "./components/Favoritos";
 
-const URL_BASE = "https://be-a-rym.up.railway.app/api/character";
-const API_KEY = "d5141f0111b7.0deae643d9889361479b";
+// const URL_BASE = "https://be-a-rym.up.railway.app/api/character";
+// const API_KEY = "d5141f0111b7.0deae643d9889361479b";
 
 function App() {
   const [characters, setCharacters] = React.useState([]);
   const [access, setAccess] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  let EMAIL = "fran22345@gmail.com";
-  let PASSWORD = "123fran";
 
   function login(userData) {
-    if (userData.password === PASSWORD && userData.email === EMAIL) {
-      setAccess(true);
-      navigate("/home");
-    }
+    const { email, password } = userData;
+    const URL = "http://localhost:3001/rickandmorty/login";
+    axios(URL + `?email=${email}&password=${password}`).then(({ data }) => {
+      const { access } = data;
+      setAccess(access);
+      access && navigate("/home");
+    });
   }
   function logout() {
     setAccess(false);
   }
+
   useEffect(() => {
     !access && navigate("/");
   }, [access]);
 
   const onSearch = (id) => {
-    axios(`${URL_BASE}/${id}?key=${API_KEY}`).then(({ data }) => {
+    axios(`http://localhost:3001/rickandmorty/character/${id}`)
+    .then(({ data }) => {
       if (data.name) {
         setCharacters((oldChars) => [...oldChars, data]);
       } else {
@@ -45,7 +48,7 @@ function App() {
   };
   const onClose = (id) => {
     const characterFilter = characters.filter(
-      (character) => character.id !== Number(id)
+      (character) => character.id === Number(id)
     );
     setCharacters(characterFilter);
   };

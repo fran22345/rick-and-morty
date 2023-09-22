@@ -8,25 +8,20 @@ const initialState = {
 const reducer = (state = initialState, actions) => {
   switch (actions.type) {
     case ADD_FAV:
-      return {
-        ...state,
-        allChracters: [...state.allChracters, actions.payload],
-      };
+      return { ...state, myFavorites: actions.payload, allCharacters: actions.payload };
 
     case REMOVE_FAV:
-      const newArray = state.myFavorite.filter(
-        (item) => item.id !== actions.payload
-      );
-
-      return {
-        ...state,
-        myFavorite: newArray,
-      };
+      return { ...state, myFavorites: actions.payload, allCharacters: actions.payload };
 
     case FILTER:
-      const filterChar = state.allChracters.filter(
-        (val) => val.gender === actions.payload
-      );
+      let filterChar;
+      if (actions.payload === "Todos") {
+        filterChar = state.allChracters;
+      } else {
+        filterChar = state.allChracters.filter(
+          (val) => val.gender === actions.payload
+        );
+      }
       return {
         ...state,
         myFavorite: filterChar,

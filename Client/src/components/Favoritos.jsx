@@ -1,19 +1,24 @@
 import { connect, useDispatch } from "react-redux";
 import Card from "./Card";
 import { orderCards, filterCards } from "../redux/actions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const FavCard = ({ myFavorite }) => {
   const dispatch = useDispatch();
   const [aux, setAux] = useState(false);
 
   const handleOrder = (event) => {
-    setAux(!aux);
+    setAux(true);
     dispatch(orderCards(event.target.value));
   };
   const handleFilter = (event) => {
     dispatch(filterCards(event.target.value));
   };
+
+  useEffect(()=>{
+    dispatch(filterCards("Todos"))
+    dispatch(orderCards("A"))
+  },[])
   return (
     <div>
       <select onChange={handleOrder} name="" id="">
@@ -21,6 +26,7 @@ const FavCard = ({ myFavorite }) => {
         <option value="D">Descendente</option>
       </select>
       <select onChange={handleFilter} name="" id="">
+        <option value="Todos">Todos</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
         <option value="Genderless">Genderless</option>

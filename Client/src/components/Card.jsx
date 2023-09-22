@@ -17,7 +17,7 @@ function Card({
   myFavorite,
 }) {
   const [isFav, setIsFav] = useState(false);
-
+  
   const handleFavorite = () => {
     if (isFav) {
       setIsFav(false);
@@ -44,21 +44,23 @@ function Card({
       }
     });
   }, [myFavorite]);
+
   return (
     <div>
+      <button onClick={()=> {onClose(id)}}>X</button>
       {isFav ? (
         <button onClick={handleFavorite}>❤️</button>
       ) : (
         <button onClick={handleFavorite}>🤍</button>
       )}
-      <button onClick={() => onClose(id)}>X</button>
+      
       <Link to={`/detail/${id}`}>
         <h2>{name}</h2>
         <h2>{species}</h2>
         <h2>{gender}</h2>
         <h2>{status}</h2>
         <h2>{origin}</h2>
-        <img src={image} alt="" />
+        <img src={image} alt=""/>
       </Link>
     </div>
   );

@@ -2,19 +2,18 @@ import { useState } from "react";
 import validate from "./validation";
 
 const Form = (props) => {
-    console.log(props)
   const [inputs, setInputs] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({ email: "", password: "" });
-    console.log(inputs)
+
   const handleChange = (event) => {
     setInputs({ ...inputs, [event.target.name]: event.target.value });
     setErrors(validate({ ...inputs, [event.target.name]: event.target.value }));
   };
 
-  const handleSubmit = (event)=>{
-    event.preventDefault()
-    props.login(inputs)
-  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    props.login(inputs);
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -36,7 +35,7 @@ const Form = (props) => {
         value={inputs.password}
       />
       {errors.password ? <p className="danger">{errors.password}</p> : null}
-      <button type="submit"> LogIn</button>
+      <button type="submit"> Login</button>
     </form>
   );
 };
